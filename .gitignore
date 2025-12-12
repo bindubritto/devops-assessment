@@ -36,3 +36,16 @@ tmp/
 temp/
 *.tmp
 
+# SAM CLI
+.aws-sam/
+samconfig.toml.bak
+
+# Docker
+.docker/
+
+# Build output
+dist/
+.aws-sam/
+
+# ZIP files
+*.zip

@@ -166,7 +166,9 @@ Resources:
               S3Key:
                 Rules:
                   - Name: prefix
-                    Value: ""
+                    Value: "uploads/"
+                  - Name: suffix
+                    Value: ".json"
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-media-bucket"

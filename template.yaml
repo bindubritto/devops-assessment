@@ -161,7 +161,7 @@ Resources:
       NotificationConfiguration:
         LambdaConfigurations:
           - Event: s3:ObjectCreated:*
-            Function: !GetAtt S3CompressorFunction.Arn
+            Function: !Ref S3CompressorFunction.Alias
             Filter:
               S3Key:
                 Rules:
@@ -251,7 +251,7 @@ Resources:
   LambdaInvokePermission:
     Type: AWS::Lambda::Permission
     Properties:
-      FunctionName: !GetAtt S3CompressorFunction.Arn
+      FunctionName: !Ref S3CompressorFunction.Alias
       Action: lambda:InvokeFunction
       Principal: s3.amazonaws.com
       SourceArn: !Sub "arn:aws:s3:::${AWS::StackName}-media-bucket-${AWS::AccountId}"

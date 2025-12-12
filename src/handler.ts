@@ -14,8 +14,13 @@ import {
 
 export const handler = async (
   event: any,
-  _context: Context
+  context: Context
 ): Promise<HandlerResponse> => {
+  console.log(`Event: ${JSON.stringify(event)}`);
+  console.log(`Lambda Version: ${context.functionVersion}`);
+  console.log(`Function Name: ${context.functionName}`);
+  console.log(`Invoked Function ARN: ${context.invokedFunctionArn}`);
+  
   const results: ProcessingResult[] = [];
 
   try {

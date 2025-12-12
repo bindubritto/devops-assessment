@@ -1,26 +1,29 @@
-FROM node:22-alpine AS builder
+FROM public.ecr.aws/lambda/nodejs:20 AS builder
 
-RUN corepack enable && corepack prepare pnpm@10.11.0 --activate
+RUN npm install -g pnpm
 
-WORKDIR /app
+WORKDIR /build
 
 COPY package.json pnpm-lock.yaml ./
+
 RUN pnpm install --frozen-lockfile
 
 COPY tsconfig.json ./
-COPY src ./src
-RUN pnpm build
+COPY src/ ./src/
 
-FROM node:22-alpine
+RUN pnpm run build
 
-RUN corepack enable && corepack prepare pnpm@10.11.0 --activate
+FROM public.ecr.aws/lambda/nodejs:20 AS production
 
-WORKDIR /app
+RUN npm install -g pnpm
+
+WORKDIR ${LAMBDA_TASK_ROOT}
 
 COPY package.json pnpm-lock.yaml ./
+
 RUN pnpm install --frozen-lockfile --prod
 
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /build/dist/ ./dist/
 
-CMD ["node", "dist/main.js"]
+CMD ["dist/handler.handler"]
 

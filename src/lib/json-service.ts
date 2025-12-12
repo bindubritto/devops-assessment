@@ -1,4 +1,5 @@
 import { downloadJsonFromS3, downloadFromS3 } from "./download.js";
+import { uploadToS3, deleteFromS3 } from "./upload.js";
 import { compressToZip } from "./compress.js";
 import { Readable } from "stream";
 import { shouldSkipFile, generateZipKey } from "./processor.js";
@@ -10,6 +11,7 @@ export async function compressJsonFromS3(
   const {
     bucket,
     key,
+    deleteOriginal = true,
     returnJsonData = false,
   } = options;
 
@@ -40,6 +42,12 @@ export async function compressJsonFromS3(
 
   const compressedBuffer = await compressToZip(bodyStream, originalFileName);
   const zipKey = generateZipKey(jsonKey);
+
+  await uploadToS3(bucket, zipKey, compressedBuffer);
+
+  if (deleteOriginal) {
+    await deleteFromS3(bucket, jsonKey);
+  }
 
   return {
     originalKey: jsonKey,

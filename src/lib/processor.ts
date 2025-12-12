@@ -1,5 +1,6 @@
 import { Readable } from "stream";
 import { downloadFromS3 } from "./download.js";
+import { uploadToS3, deleteFromS3 } from "./upload.js";
 import { compressToZip } from "./compress.js";
 import type { S3ObjectInfo, ProcessS3ObjectResult } from "../types/index.js";
 
@@ -48,7 +49,8 @@ export async function processS3Object(
   const compressedBuffer = await compressToZip(bodyStream, originalFileName);
   const zipKey = generateZipKey(key);
 
-
+  await uploadToS3(bucket, zipKey, compressedBuffer);
+  await deleteFromS3(bucket, key);
 
   return { originalKey: key, zipKey };
 }

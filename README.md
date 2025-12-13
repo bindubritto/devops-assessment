@@ -195,29 +195,29 @@ Assuming a 30-day month.
 
 Monthly totals:
 
-Files per month = 1,000,000 * 24 * 30 = 720,000,000 files
-Raw size/month = 720,000,000 * 10 MB = 7,031,250 GB (~6,866 TB).
+- **Files per month** = 1,000,000 * 24 * 30 = 720,000,000 files
+- **Raw size/month** = 720,000,000 * 10 MB = 7,031,250 GB (~6,866 TB).
 
 **Assumption (ZIP reduces size by 50%) though I've seen it reduce size by more than 60% in some cases**
 
-Compressed storage = 3,515,625 GB 
+- **Compressed storage** = 3,515,625 GB 
 
 
 
 Price assumptions for AWS Services:
 
-S3 Standard storage = $0.023 / GB-month
-S3 PUT requests = $0.005 per 1,000 requests
-Lambda requests = $0.20 per 1,000,000 requests
-Lambda compute: For 512MB * 1s = $0.0000166667 per GB-second
+- **S3 Standard storage** = $0.023 / GB-month
+- **S3 PUT requests** = $0.005 per 1,000 requests
+- **Lambda requests** = $0.20 per 1,000,000 requests
+- **Lambda compute** = For 512MB * 1s = $0.0000166667 per GB-second
 
 
 Estimated monthly cost:
-Storage : 3,515,625 GB * $0.023 ≈ $80,859 / month
-PUT requests (720M) : (720,000,000/1,000) * $0.005 = $3,600
-Lambda requests cost : (720,000,000/1,000,000) * $0.20 = $144
-Lambda compute cost : (512MB * 1s avg) * $0.0000166667 = $6,000
-Total : $80,859 + $3,600 + $144 + $6,000 = $90,600 / month (Approximately)
+- **Storage** : 3,515,625 GB * $0.023 ≈ $80,859 / month 
+- **PUT requests (720M)** : (720,000,000/1,000) * $0.005 = $3,600
+- **Lambda requests cost** : (720,000,000/1,000,000) * $0.20 = $144
+- **Lambda compute cost** : (512MB * 1s avg) * $0.0000166667 = $6,000
+- **Total** : $80,859 + $3,600 + $144 + $6,000 = $90,600 / month (Approximately)
 
 
 I've a side note here. This is just a rough estimate. The actual may vary based on the actual usage and the region.
